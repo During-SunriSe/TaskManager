@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="app" v-cloak>
+      <div class="titel"><h2>Notes</h2></div>
+
+      <h4>Create:</h4>
+      <input
+        type="text"
+        placeholder="Add a new note..."
+        v-model="inputValue"
+        @keypress.enter="addNote"
+      />
+
+      <div class="buttons">
+        <button class="butt add" @click="addNote">Add</button>
+        <button class="butt clear" @click="clearNotes">Clear</button>
+      </div>
+
+      <hr />
+
+      <ul>
+        <li v-for="(note, index) in notes">
+          <p>{{note}}</p>
+          <div class="note-buttons">
+            <button class="butt del" @click="deleteNote(index, $event)">
+              <img class="trash" src="png/trashIcon.png" alt="Delete" />
+            </button>
+            <button class="butt doneButton" @click="doneNote(index)">
+              Done
+            </button>
+          </div>
+        </li>
+        <li id="list-done" v-for="(note, index) in doneNotes">
+          <p class="done">{{note}}</p>
+          <div class="note-buttons">
+            <button
+              class="butt del"
+              id="done"
+              @click="deleteNote(index, $event)"
+            >
+              <img class="trash" src="png/trashIcon.png" alt="Delete" />
+            </button>
+            <button class="butt ret" @click="returnNote(index)">Return</button>
+          </div>
+        </li>
+      </ul>
+      <h5 v-show="doneNotes.length === 0 && notes.length === 0">
+        You don´t have any tasks now
+      </h5>
+      <hr />
+    </div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
